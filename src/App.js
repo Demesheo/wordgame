@@ -90,16 +90,17 @@ class Hangman extends Component {
       wrongs: [],
       current: [],
       correct: 0,
-      result: ""
+      result: "Guess a letter."
     }
   }
 
   handleClick(){
-    console.log("gamestate", this.state)
+    this.state.current = []
+    this.componentDidMount()
   }
 
   onLetterClicked(e){
-    console.log("letterclicked", e)
+    if(this.state.result === "Game Over!" || this.state.result === "You Win!") return
     var _this = this
     return fetch('http://localhost:8081/guess', {
         headers: {'Content-Type': 'application/json'},
@@ -133,9 +134,12 @@ class Hangman extends Component {
         <div>
           <GuessWord current={this.state.current}/>
           <Gallows wrongsLength={this.state.wrongs.length}/>
-          <button onClick={this.handleClick.bind(this)}>state</button>
+          <button className="NewGame-button" onClick={this.handleClick.bind(this)}>New Game</button>
         </div>
-          <Letters onLetterClicked={this.onLetterClicked.bind(this)}/>
+        <Letters onLetterClicked={this.onLetterClicked.bind(this)}/>
+        <div className="Status">
+          {this.state.result}
+        </div>
       </div>
     )
   }
