@@ -17,3 +17,14 @@
 .App-intro {
   font-size: large;
 }
+
+.All-letters {
+  width: 480px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+}
+
+.Letter {
+  cursor: pointer;
+}
