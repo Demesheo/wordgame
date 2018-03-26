@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// var api = "http://wordgameapi-env.us-east-2.elasticbeanstalk.com"
+
+
 class App extends Component {
   render() {
     return (
@@ -16,16 +19,45 @@ class App extends Component {
   }
 }
 
-class Hangman extends Component {
-  handleClick() {
-    console.log("button clicked")
+class Gallows extends Component {
+  constructor(props){
+    super(props)
+    console.log("Gallows", this)
   }
+  render(){
+    return (
+      <div className="Gallows-div">
+        <img className="Gallows-img" src={require("/Hangman-"+this.props.stage+".png")} alt=""></img>
+      </div>
+    )
+  }
+}
+
+class Hangman extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      wrongs: [],
+      stage: 0,
+      current: [],
+      correct: 0,
+      result: ""
+    }
+  }
+
+  componentDidMount(){
+    var newGameApi = "http://localhost:8081/newgame"
+    fetch(newGameApi)
+      .then(response => response.json())
+      .then(data => this.setState(data))
+  }
+
 
   render() {
     return (
       <div>
         <div>
-          <p>Click below to begin a new game!</p>
+          <Gallows stage={this.state.stage}></Gallows>
         </div>
         <button className="Start-button" onClick={this.handleClick}>
           START
