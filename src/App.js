@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -7,14 +6,32 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Hangman</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="Content-body">
+          <Hangman/>
+        </div>
       </div>
     );
+  }
+}
+
+class Hangman extends Component {
+  handleClick() {
+    console.log("button clicked")
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <p>Click below to begin a new game!</p>
+        </div>
+        <button className="Start-button" onClick={this.handleClick}>
+          START
+        </button>
+      </div>
+    )
   }
 }
 
