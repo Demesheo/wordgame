@@ -56,14 +56,14 @@ class Gallows extends Component {
 class Letter extends Component {
   render(){
     return (
-      <div className="Letter">{this.props.letter}</div>
+      <div className="Letter" onClick={this.props.letterClicked}>{this.props.letter}</div>
     )
   }
 }
 
 class Letters extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       letters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     }
@@ -74,8 +74,8 @@ class Letters extends Component {
       <div className="All-letters">
         {
           this.state.letters.map(function(item, i){
-            return <Letter key={item} letter={item}/>
-          })
+            return <Letter key={item} letter={item} letterClicked={() => this.props.onLetterClicked(item)}/>
+          }, this)
         }
       </div>
     )
@@ -97,6 +97,10 @@ class Hangman extends Component {
     console.log("gamestate", this.state)
   }
 
+  onLetterClicked(e){
+    console.log("letterclicked", e)
+  }
+
   componentDidMount(){
     var newGameApi = "http://localhost:8081/newgame"
     var _this = this
@@ -115,7 +119,7 @@ class Hangman extends Component {
           <Gallows wrongsLength={this.state.wrongs.length}/>
           <button onClick={this.handleClick.bind(this)}>state</button>
         </div>
-          <Letters/>
+          <Letters onLetterClicked={this.onLetterClicked.bind(this)}/>
       </div>
     )
   }
