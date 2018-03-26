@@ -95,7 +95,7 @@ class Hangman extends Component {
   }
 
   handleClick(){
-    this.state.current = []
+    this.setState({current: []})
     this.componentDidMount()
   }
 
