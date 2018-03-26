@@ -20,10 +20,23 @@
 
 .All-letters {
   width: 480px;
+  height: 24px;
   display: flex;
   justify-content: space-between;
   margin: 0px auto;
 }
+
+.GuessWord-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 0px auto;
+  width: 480px;
+}
+
+.GuessWord-letter {
+  border-bottom: 1px solid black;
+}
+
 
 .Letter {
   cursor: pointer;

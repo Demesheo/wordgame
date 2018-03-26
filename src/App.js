@@ -22,7 +22,7 @@ class App extends Component {
 class GuessWordLetter extends Component {
   render(){
     return (
-      <div>
+      <div className="GuessWord-letter">
         {this.props.gwletter}
       </div>
     )
@@ -35,7 +35,7 @@ class GuessWord extends Component {
       <div className="GuessWord-container">
         {
           this.props.current.map(function(item, i){
-            return <GuessWordLetter key="item" gwletter="item"/>
+            return <GuessWordLetter key={i} gwletter={item}/>
           })
         }
       </div>
@@ -86,6 +86,7 @@ class Hangman extends Component {
   constructor(props){
     super(props)
     this.state = {
+      _id: null,
       wrongs: [],
       current: [],
       correct: 0,
@@ -99,6 +100,20 @@ class Hangman extends Component {
 
   onLetterClicked(e){
     console.log("letterclicked", e)
+    var _this = this
+    return fetch('http://localhost:8081/guess', {
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "_id": _this.state._id,
+          "letter": e
+        }),
+        method: "PUT",
+    })
+    .then(response => response.json())
+    .then(function(data){
+      console.log("data", data);
+      _this.setState(data);
+    })
   }
 
   componentDidMount(){
@@ -116,6 +131,7 @@ class Hangman extends Component {
     return (
       <div>
         <div>
+          <GuessWord current={this.state.current}/>
           <Gallows wrongsLength={this.state.wrongs.length}/>
           <button onClick={this.handleClick.bind(this)}>state</button>
         </div>
