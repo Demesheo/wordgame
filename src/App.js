@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-// var api = "http://wordgameapi-env.us-east-2.elasticbeanstalk.com"
+var api = "http://wordgameapi-env.us-east-2.elasticbeanstalk.com"
 
 class App extends Component {
   render() {
@@ -100,9 +100,9 @@ class Hangman extends Component {
   }
 
   onLetterClicked(e){
-    if(this.state.result === "Game Over!" || this.state.result === "You Win!") return
+    if(this.state.wrongs.length >= 6 || this.state.result === "You Win!") return
     var _this = this
-    return fetch('http://localhost:8081/guess', {
+    return fetch('http://wordgameapi-env.us-east-2.elasticbeanstalk.com/guess', {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           "_id": _this.state._id,
@@ -118,7 +118,7 @@ class Hangman extends Component {
   }
 
   componentDidMount(){
-    var newGameApi = "http://localhost:8081/newgame"
+    var newGameApi = "http://wordgameapi-env.us-east-2.elasticbeanstalk.com/newgame"
     var _this = this
     fetch(newGameApi)
       .then(response => response.json())
